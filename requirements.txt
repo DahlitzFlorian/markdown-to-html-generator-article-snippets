@@ -1,0 +1,4 @@
+# requirements.txt
+
+Flask==1.1.2
+Markdown==3.2.1
