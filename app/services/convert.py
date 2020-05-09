@@ -7,6 +7,8 @@ from pathlib import Path
 import jinja2
 import markdown
 
+import blog
+
 ROOT = Path(__file__).parent.parent.parent
 POSTS_DIR = ROOT / "app" / "posts"
 TEMPLATE_DIR = ROOT / "app" / "templates"
@@ -34,8 +36,9 @@ def generate_entries():
 
         with open(post) as post_f:
             content = post_f.read()
+            estimated_reading_time = blog.estimate_reading_time(content)
             html = _md.convert(content)
-            doc = env.get_template(str(BLOG_TEMPLATE_FILE)).render(content=html, baseurl=BASE_URL, url=url, **_md.Meta)
+            doc = env.get_template(str(BLOG_TEMPLATE_FILE)).render(content=html, baseurl=BASE_URL, estimated_reading_time=estimated_reading_time, url=url, **_md.Meta)
 
         with open(target_file, "w") as post_html_f:
             post_html_f.write(doc)
