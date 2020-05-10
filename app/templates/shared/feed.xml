@@ -1,0 +1,26 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>
+            My Blog - {{ rss_title }}
+        </title>
+        <description>
+            {{ rss_description }}
+        </description>
+        <link>https://florian-dahlitz.de/blog</link>
+        <lastBuildDate>{{date}}</lastBuildDate>
+        <pubDate>Mon, 01 Jun 2020 11:48:09 +0100</pubDate>
+        <atom:link href="https://florian-dahlitz.de/{{ rss_link }}" rel="self" type="application/rss+xml" />
+        {% for item in posts %}
+        <item>
+            <title>{{ item.title[0] }}</title>
+            <description>
+                {{ item.subtitle[0] }}
+            </description>
+            <link>{{ item.link }}</link>
+            <pubDate>{{ item.rfc2822_date }}</pubDate>
+            <dc:creator>Florian Dahlitz</dc:creator>
+            <guid>{{ item.link }}</guid>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

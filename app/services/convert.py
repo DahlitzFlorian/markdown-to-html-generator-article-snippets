@@ -10,10 +10,15 @@ import markdown
 import blog
 
 ROOT = Path(__file__).parent.parent.parent
+
 POSTS_DIR = ROOT / "app" / "posts"
 TEMPLATE_DIR = ROOT / "app" / "templates"
+FEEDS_DIR = TEMPLATE_DIR / "feeds"
+
 BLOG_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "layout.html"
+FEED_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "feed.xml"
 INDEX_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "index.html"
+
 BASE_URL = os.environ.get("DOMAIN", "http://0.0.0.0:5000/")
 
 
@@ -67,6 +72,19 @@ def generate_entries():
         index_f.write(
             env.get_template(str(INDEX_TEMPLATE_FILE)).render(
                 posts=all_posts, template_path=str(BLOG_TEMPLATE_FILE)
+            )
+        )
+
+    with open(FEEDS_DIR / "rss.xml", "w") as rss_f:
+        rss_description = "A collection of (mostly) technology articles"
+        rss_title = "Complete Feed"
+        rss_f.write(
+            env.get_template(str(FEED_TEMPLATE_FILE)).render(
+                posts=all_posts,
+                date=formatdate(),
+                rss_description=rss_description,
+                rss_link="rss.xml",
+                rss_title=rss_title,
             )
         )
 
