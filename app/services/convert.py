@@ -15,9 +15,9 @@ POSTS_DIR = ROOT / "app" / "posts"
 TEMPLATE_DIR = ROOT / "app" / "templates"
 FEEDS_DIR = TEMPLATE_DIR / "feeds"
 
-BLOG_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "layout.html"
-FEED_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "feed.xml"
-INDEX_TEMPLATE_FILE = TEMPLATE_DIR / "shared" / "index.html"
+BLOG_TEMPLATE_FILE = "shared/layout.html"
+FEED_TEMPLATE_FILE = "shared/feed.xml"
+INDEX_TEMPLATE_FILE = "shared/index.html"
 
 BASE_URL = os.environ.get("DOMAIN", "http://0.0.0.0:5000/")
 
@@ -26,7 +26,7 @@ def generate_entries():
     posts = POSTS_DIR.glob("*.md")
 
     extensions = ["extra", "smarty", "meta"]
-    loader = jinja2.FileSystemLoader(searchpath="./")
+    loader = jinja2.FileSystemLoader(searchpath=TEMPLATE_DIR)
     env = jinja2.Environment(loader=loader, autoescape=True)
 
     all_posts = []
